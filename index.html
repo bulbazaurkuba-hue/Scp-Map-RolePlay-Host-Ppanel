@@ -246,6 +246,16 @@
 
         <h3 id="r-h5">Performance & Management Tips</h3>
         <p id="r-p5">To reduce lag and manage the facility properly, you need to spawn the SCPs using the provided items/eggs, and then eliminate them using the special wooden sword found in our chest after tests are completed.</p>
+
+        <!-- DODANE NOWE PUNKTY -->
+        <h3 id="r-h6">World Settings & Alpha Warhead Warning</h3>
+        <p id="r-p6">We advise against changing default world settings as everything is built specifically for this roleplay. Also, we strongly advise against detonating the Alpha Warhead (nuke) unless intended—it will blow the map to pieces and leave a massive crater to the void!</p>
+
+        <h3 id="r-h7">Shaders & Visuals</h3>
+        <p id="r-p7">The map was created with shaders enabled. If playing on Vanilla graphics and something looks off (e.g. glowing blocks), feel free to adjust visual options yourself.</p>
+
+        <h3 id="r-h8" style="color: #ff1a1a;">CRITICAL WARNING: Scarlet King Safe Mode</h3>
+        <p id="r-p8">DO NOT change the gamerule "Scarlet King Safe Mode" to FALSE under any circumstances! Spawning the Scarlet King with this setting disabled will completely destroy the map beyond repair.</p>
     </div>
 
     <!-- ZAKŁADKA ROLEPLAY (PANEL) -->
@@ -288,10 +298,19 @@
             </div>
         </div>
 
+        <!-- Opcja 5 (DODANA OPCJA) -->
+        <div class="setting-group">
+            <span id="lbl-outside" class="setting-label">5. Leaving Facility (Permission to go outside)</span>
+            <div class="toggle-container">
+                <button class="toggle-btn yes" onclick="setToggle(this, 'outside', 'YES')">YES</button>
+                <button class="toggle-btn no" onclick="setToggle(this, 'outside', 'NO')">NO</button>
+            </div>
+        </div>
+
         <!-- Generator komendy -->
         <div class="output-box">
             <h4 id="cmd-title">Generated Server Command:</h4>
-            <textarea id="commandOutput" readonly>/tellraw @a {"text":"[SCP CONFIG] SCPs: NOT SET | Strikes: NOT SET | Leaving Cells: NOT SET | Rank Changes: NOT SET","color":"gold"}</textarea>
+            <textarea id="commandOutput" readonly>/tellraw @a {"text":"[SCP CONFIG] SCPs: NOT SET | Strikes: NOT SET | Leaving Cells: NOT SET | Rank Changes: NOT SET | Leaving Facility: NOT SET","color":"gold"}</textarea>
             <button id="copy-btn-text" class="copy-btn" onclick="copyCommand()">COPY COMMAND TO CLIPBOARD</button>
         </div>
     </div>
@@ -303,7 +322,8 @@
         scp: 'NOT SET',
         strikes: 'NOT SET',
         freedom: 'NOT SET',
-        ranks: 'NOT SET'
+        ranks: 'NOT SET',
+        outside: 'NOT SET'
     };
 
     const translations = {
@@ -321,11 +341,18 @@
             rp4: "We strongly recommend turning everything ON for the best and most interesting roleplay experience. Everything should be enabled to fully enjoy the facility features.",
             rh5: "Performance & Management Tips",
             rp5: "To reduce lag and manage the facility properly, you need to spawn the SCPs using the provided items/eggs, and then eliminate them using the special wooden sword found in our chest after tests are completed.",
+            rh6: "World Settings & Alpha Warhead Warning",
+            rp6: "We advise against changing default world settings as everything is built specifically for this roleplay. Also, we strongly advise against detonating the Alpha Warhead (nuke) unless intended—it will blow the map to pieces and leave a massive crater to the void!",
+            rh7: "Shaders & Visuals",
+            rp7: "The map was created with shaders enabled. If playing on Vanilla graphics and something looks off (e.g. glowing blocks), feel free to adjust visual options yourself.",
+            rh8: "CRITICAL WARNING: Scarlet King Safe Mode",
+            rp8: "DO NOT change the gamerule " + '"' + "Scarlet King Safe Mode" + '"' + " to FALSE under any circumstances! Spawning the Scarlet King with this setting disabled will completely destroy the map beyond repair.",
             pDesc: "Configure session parameters for players (nothing is selected by default):",
             lblScp: "1. SCP Objects (Are SCPs active on the map?)",
             lblStrikes: "2. Class-D Strikes (Permission for strikes / riots)",
             lblFreedom: "3. Leaving Cells (Can Class-D leave cells freely?)",
             lblRanks: "4. Rank Changes (Can players change ranks, e.g., Class-D to Guard?)",
+            lblOutside: "5. Leaving Facility (Permission to go outside)",
             cmdTitle: "Generated Server Command:",
             copyBtn: "COPY COMMAND TO CLIPBOARD",
             copiedAlert: "Command copied to clipboard!",
@@ -347,11 +374,18 @@
             rp4: "Мы настоятельно рекомендуем включить абсолютно всё для лучшего и наиболее интересного ролеплея. Всё должно быть включено, чтобы полностью прочувствовать возможности комплекса.",
             rh5: "Советы по производительности и управлению",
             rp5: "Чтобы уменьшить лаги и правильно управлять комплексом, вам нужно спавнить SCP с помощью выданных предметов/яиц призыва, а затем уничтожать их с помощью специального деревянного меча, найденного в нашем сундуке после завершения тестов.",
+            rh6: "Настройки мира и Атомная Боеголовка",
+            rp6: "Мы не рекомендуем менять стандартные настройки мира. Также крайне не рекомендуем взрывать атомную боеголовку, иначе вся карта взлетит на воздух и останется огромный кратер!",
+            rh7: "Шейдеры и графика",
+            rp7: "Карта создавалась с шейдерами. Если вы играете на ваниле и что-то выглядит странно, можете подстроить графические параметры под себя.",
+            rh8: "ВАЖНОЕ ПРЕДУПРЕЖДЕНИЕ: Scarlet King Safe Mode",
+            rp8: "Ни в коем случае не меняйте gamerule Scarlet King Safe Mode на FALSE! Спавн Алого Короля при отключенном режиме уничтожит карту безвозвратно.",
             pDesc: "Настройте параметры сессии для игроков (по умолчанию ничего не выбрано):",
             lblScp: "1. Объекты SCP (Активны ли SCP на карте?)",
             lblStrikes: "2. Бунты класса-D (Разрешение на забастовки / бунты)",
             lblFreedom: "3. Выход из камер (Могут ли классы-D свободно выходить?)",
             lblRanks: "4. Смена рангов (Могут ли игроки менять ранг, например Class-D на Охрану?)",
+            lblOutside: "5. Выход из комплекса (Разрешение выходить наружу)",
             cmdTitle: "Сгенерированная команда сервера:",
             copyBtn: "СКОПИРОВАТЬ КОМАНДУ В БУФЕР",
             copiedAlert: "Команда скопирована в буфер обмена!",
@@ -360,7 +394,7 @@
             notSet: "НЕ ЗАДАНО"
         },
         pl: {
-            title: "PLACÓWKA SCP - PANEL HOSTА",
+            title: "PLACÓWKA SCP - PANEL HOSTA",
             tabRead: "Czytaj (Poradnik)",
             tabRp: "Roleplay (Panel Hosta)",
             rh1: "[WITAMY] Dziękuję za pobranie!",
@@ -373,11 +407,18 @@
             rp4: "Polecamy zaznaczyć wszystko (włączyć wszystko), aby uzyskać najlepszą i najciekawszą rozgrywkę roleplay. Wszystko powinno być aktywne, aby w pełni cieszyć się mapą.",
             rh5: "Wskazówki dotyczące wydajności i zarządzania",
             rp5: "Aby zredukować lagi i odpowiednio zarządzać obiektem, musisz najpierw zespawnować SCP za pomocą przygotowanych jajek, a po zakończonych testach eliminować je za pomocą specjalnego drewnianego miecza z naszej skrzynki.",
+            rh6: "Ustawienia Świata i Atomówka",
+            rp6: "Odradzamy zmienianie domyślnych ustawień świata. Odradzamy również detonowanie atomówki, no chyba że bardzo chcecie — wybuch rozwali mapę w piz*dec i zostawi wielki krater do próżni!",
+            rh7: "Shadery i Grafika",
+            rp7: "Gra została zrobiona na shaderach. Jeżeli na vanillii coś wygląda inaczej (np. wydaje Ci się, że coś powinno się świecić), możesz to samodzielnie poprawić w grze.",
+            rh8: "KATEGORYCZNY ZAKAZ: Scarlet King Safe Mode",
+            rp8: "Za żadne grzechy nie wyłączaj gamerule Scarlet King Safe Mode (nie ustawiaj na FALSE)! Zrespienie go przy wyłączonym trybie awaryjnym rozwali całą mapę nie do uratowania.",
             pDesc: "Skonfiguruj parametry sesji dla graczy (domyślnie nic nie jest zaznaczone):",
             lblScp: "1. Obiekty SCP (Czy obiekty SCP są aktywne na mapie?)",
             lblStrikes: "2. Strajki Klasy-D (Zezwolenie na strajki / bunt)",
             lblFreedom: "3. Opuszczanie cel (Czy klasa D może wychodzić z cel?)",
             lblRanks: "4. Zmiana rang (Czy gracze mogą zmienić rangę np. z D na Guarda?)",
+            lblOutside: "5. Opuszczanie placówki (Zezwolenie na wyjście na dwór)",
             cmdTitle: "Wygenerowana komenda dla serwera:",
             copyBtn: "SKOPIRUJ KOMENDĘ DO SCHOWKA",
             copiedAlert: "Skopiowano komendę do schowka!",
@@ -409,12 +450,19 @@
         document.getElementById("r-p4").innerText = t.rp4;
         document.getElementById("r-h5").innerText = t.rh5;
         document.getElementById("r-p5").innerText = t.rp5;
+        document.getElementById("r-h6").innerText = t.rh6;
+        document.getElementById("r-p6").innerText = t.rp6;
+        document.getElementById("r-h7").innerText = t.rh7;
+        document.getElementById("r-p7").innerText = t.rp7;
+        document.getElementById("r-h8").innerText = t.rh8;
+        document.getElementById("r-p8").innerText = t.rp8;
 
         document.getElementById("p-desc").innerText = t.pDesc;
         document.getElementById("lbl-scp").innerText = t.lblScp;
         document.getElementById("lbl-strikes").innerText = t.lblStrikes;
         document.getElementById("lbl-freedom").innerText = t.lblFreedom;
         document.getElementById("lbl-ranks").innerText = t.lblRanks;
+        document.getElementById("lbl-outside").innerText = t.lblOutside;
 
         document.getElementById("cmd-title").innerText = t.cmdTitle;
         document.getElementById("copy-btn-text").innerText = t.copyBtn;
@@ -455,7 +503,7 @@
     }
 
     function updateCommand() {
-        let text = `[SCP CONFIG] SCPs: ${settings.scp} | Strikes: ${settings.strikes} | Cells: ${settings.freedom} | Ranks: ${settings.ranks}`;
+        let text = `[SCP CONFIG] SCPs: ${settings.scp} | Strikes: ${settings.strikes} | Cells: ${settings.freedom} | Ranks: ${settings.ranks} | Outside: ${settings.outside}`;
         let command = `/tellraw @a {"text":"${text}","color":"gold"}`;
         document.getElementById("commandOutput").value = command;
     }
